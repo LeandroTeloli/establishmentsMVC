@@ -1,0 +1,54 @@
+﻿@model IEnumerable<estabelecimentoMVC.Models.Categoria>
+
+@{
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Fitcard - Categorias</title>
+
+    <link rel="stylesheet" href="~/css/CategoriaStyle.css" />
+  
+</head>
+<body>
+    <div class="container">
+        <div style="display: flex; flex-direction: row; justify-content: space-between">
+            <h2>Lista de Categorias</h2>
+
+            <div id="searchDiv">
+                <form style="width: 80%; display: flex; flex-direction: row;" asp-controller="categoria" asp-action="CategoriaSearch">
+                    <input style="border-radius:50px" class="form-control" type="text" placeholder="Buscar" aria-label="Buscar" name="descricao" />
+                    <button style="margin-left:2%;" type="submit" class="btn btn-secondary"><i style="color:white" class="fas fa-search"></i></button>
+                </form>
+                <a style="margin-left:2%;" type="button" class="btn btn-danger" asp-controller="categoria" asp-action="CategoriaAdd"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table">
+                <thead>
+                    <tr>
+                        <th id="thFirst" scope="col">Descricao</th>
+                        <th id="thLast"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var categoria in ViewBag.Categoria)
+                    {
+                        <tr>
+                            <td id="tdFirst">@categoria.Descricao</td>
+                            <td align="right">
+                                <a type="button" class="btn btn-sm btn-secondary" asp-route-id="@categoria.IdCategoria" asp-controller="categoria" asp-action="CategoriaEdit"><i class="fas fa-pen"></i></a>
+                                <a type="button" class="btn btn-sm btn-danger" asp-route-id="@categoria.IdCategoria" asp-controller="categoria" asp-action="CategoriaDelete" onclick="return confirm('Deseja excluir essa categoria?')"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="leandropereira-001-site1" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\vitel\\source\\repos\\estabelecimentoMVC\\estabelecimentoMVC\\obj\\Release\\netcoreapp3\.1\\PubTmp\\Out\\$" />
+  </parameter>
+  <parameter name="estabelecimentoMVC.Models.DataContext" description="" value="Server=MYSQL5018.site4now.net;Database=db_a66062_fitcard;Uid=a66062_fitcard;Pwd=admin17935" tags="dbfullsql">
+    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^C:\\Users\\vitel\\source\\repos\\estabelecimentoMVC\\estabelecimentoMVC\\obj\\Release\\netcoreapp3\.1\\PubTmp\\EFSQLScripts\\estabelecimentoMVC\.Models\.DataContext\.sql$" />
+  </parameter>
+</parameters>

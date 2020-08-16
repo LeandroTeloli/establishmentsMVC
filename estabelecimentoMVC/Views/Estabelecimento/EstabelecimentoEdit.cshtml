@@ -1,0 +1,122 @@
+﻿@model estabelecimentoMVC.Models.Estabelecimento
+
+@{
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Fitcard - Cadastro de Estabelecimento</title>
+
+    <link rel="stylesheet" href="~/css/EstabelecimentoStyle.css" />
+</head>
+<body>
+    <div class="container" style="width: 70%; ">
+        <h2>Editar Estabelecimento</h2>
+        <form method="post" asp-controller="estabelecimento" asp-action="EstabelecimentoEdit" style="margin-top:5%;" id="formList">
+            <div class="form-group" style="display: flex;  flex-direction: row; justify-content: space-between">
+                <div style="display: flex; width: 49%; flex-direction: column;">
+                    <label for="razaoSocial">Razão Social</label>
+                    <input type="text" class="form-control" id="razaoSocial" asp-for="RazaoSocial" placeholder="Digite a razão social" required>
+                </div>
+                <div style="display: flex; width: 49%; flex-direction: column;">
+                    <label for="nomeFantasia">Nome Fantasia</label>
+                    <input type="text" class="form-control" id="nomeFantasia" asp-for="NomeFantasia" placeholder="Digite o nome fantasia">
+                </div>
+            </div>
+            <div class="form-group" style="display: flex;  flex-direction: row; justify-content: space-between">
+                <div style="display: flex; width: 29%; flex-direction: column;">
+                    <label for="cnpj">CNPJ</label>
+                    <input type="text" class="form-control" id="cnpj" asp-for="Cnpj" placeholder="Digite o CNPJ" required>
+                </div>
+                <div style="display: flex; width: 69%; flex-direction: column;">
+                    <label for="email">E-mail</label>
+                    <input type="email" class="form-control" id="email" asp-for="Email" placeholder="e.g. nome@exemplo.com">
+                </div>
+            </div>
+            <div class="form-group" style="display: flex;  flex-direction: row; justify-content: space-between">
+                <div style="display: flex; width: 14%; flex-direction: column;">
+                    <label for="estado">Estado</label>
+                    <select onchange="loadMunicipios(this.value)" class="custom-select form-control" id="estados" asp-for="Estado">
+                        <option value="">Selecione</option>
+                        @foreach (var estado in ViewBag.IdEstado)
+                        {
+                            <option value="@estado.Text">@estado.Text</option>
+                        }
+                    </select>
+                </div>
+
+                <div style="display: flex; width: 24%; flex-direction: column;">
+                    <label for="cidade">Cidade</label>
+                    <select class="custom-select form-control" id="municipios" asp-for="Cidade">
+                        <option value="">Selecione</option>
+                        @foreach (var municipio in ViewBag.IdMunicipio)
+                        {
+                            <option value="@municipio.Text">@municipio.Text</option>
+                        }
+                    </select>
+                </div>
+
+                <div style="display: flex; width: 59%; flex-direction: column;">
+                    <label for="endereco">Endereço</label>
+                    <input type="text" class="form-control" id="endereco" asp-for="Endereco" placeholder="Digite o bairro, a rua e o número do estabelecimento">
+                </div>
+            </div>
+            <div style="display: flex;  flex-direction: row; justify-content: space-between">
+                <div style="display: flex; width: 16%; flex-direction: column;">
+                    <label for="dataCadastro">Data de Cadastro</label>
+                    <input type="text" class="form-control" id="dataCadastro" asp-for="DataCadastro">
+                </div>
+                <div style="display: flex; width: 25%; flex-direction: column;">
+                    <label for="categoria">Categoria</label>
+                    <select class="custom-select form-control" id="categoria" asp-for="IdCategoria" asp-items="ViewBag.IdCategoria">
+                        <option value="">Selecione</option>
+                    </select>
+                </div>
+                <div style="display: flex; width: 21%; flex-direction: column;">
+                    <label for="telefone">Telefone</label>
+                    <input type="text" class="form-control" id="telefone" asp-for="Telefone" placeholder="(00) 0000-0000">
+                </div>
+                <div style="display: flex; width: 12%; flex-direction: column;">
+                    <label for="agencia">Agência</label>
+                    <input type="text" class="form-control" id="agencia" asp-for="Agencia" placeholder="xxx-x">
+                </div>
+                <div style="display: flex; width: 14%; flex-direction: column;">
+                    <label for="conta">Conta</label>
+                    <input type="text" class="form-control" id="conta" asp-for="Conta" placeholder="xx.xxx-x">
+                </div>
+                <div style="display: flex; width: 9%; flex-direction: column;">
+                    <label for="status">Status</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" id="status1" value="Ativo" checked asp-for="Status">
+                        <label class="form-check-label" for="status1">
+                            Ativo
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" id="status2" value="Inativo" asp-for="Status">
+                        <label class="form-check-label" for="status2">
+                            Inativo
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-danger alert-dismissible" role="alert" id="alertDiv" style="display:none; margin-top: 3%">
+                <button type="button" class="close" onclick="hideAlert()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <p id="alertDivP"></p>
+            </div>
+            <div style="display: flex;  flex-direction: row; justify-content: space-between; margin-top: 5%">
+                <div style="display: flex; width: 100%; flex-direction: row;">
+                    <input type="submit" class="btn btn-danger salvar" style="margin-right: 1%; color: white;" value="Salvar Alterações" />
+                    <a type="button" class="btn btn-secondary" asp-controller="estabelecimento" asp-action="EstabelecimentoList">Cancelar</a>
+                    <input type="hidden" asp-for="IdEstabelecimento" />
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

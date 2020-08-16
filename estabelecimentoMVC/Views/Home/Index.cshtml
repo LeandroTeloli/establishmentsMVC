@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Fitcard</title>
+
+    <link rel="stylesheet" href="~/css/IndexStyle.css" />
+</head>
+<body>
+    <div class="TextContainer">
+        <h1>Bem-vindo ao Gerenciador de Estabelecimentos!</h1>
+        <h3>Cadastre, consulte, adapte e remova estabelecimentos e categorias do modo que preferir!</h3>
+        <a class="button" type="button" asp-controller="estabelecimento" asp-action="EstabelecimentoList"><span>Vamos lá!</span></a>
+    </div>
+</body>
+</html>

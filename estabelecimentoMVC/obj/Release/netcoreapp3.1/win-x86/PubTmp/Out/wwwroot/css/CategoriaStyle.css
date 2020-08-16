@@ -1,0 +1,149 @@
+﻿@font-face {
+    font-family: 'CircularStd-Bold';
+    src: url('../fonts/CircularStd-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'CircularStd-Medium';
+    src: url('../fonts/CircularStd-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'CircularStd-Book';
+    src: url('../fonts/CircularStd-Book.ttf') format('truetype');
+}
+
+body {
+    background-color: #FAFAFA;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+}
+
+nav {
+    width: 500px;
+    margin-bottom: 3%;
+    margin-top: 2%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    box-shadow: 0px 10px 15px -15px rgba(136,136,136,0.2);
+    background-color: white;
+    border-radius: 30px;
+}
+
+a {
+    color: #8B8B8B;
+    font-family: 'CircularStd-Medium';
+    font-size: 18px;
+    transition: all 0.3s;
+    padding: 3% 5%;
+}
+
+a:hover {
+    color: #282828;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.inicio {
+    margin-left: 50px;
+}
+
+.categorias {
+    margin-right: 50px;
+}
+
+
+h2 {
+    font-family: 'CircularStd-Bold';
+    color: #343A40;
+    margin-bottom: 2%;
+}
+
+label {
+    font-family: 'CircularStd-Medium';
+    color: #343A40;
+}
+
+table {
+    margin-top: 2%;
+}
+
+.container {
+    background-color: white;
+    border-radius: 20px;
+    padding: 60px;
+    box-shadow: 0px 10px 20px -15px rgba(136,136,136,0.5);
+}
+
+table tr {
+    text-align: left;
+}
+
+table td {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+table th {
+    background-color: #F4F4FB;
+    color: #A2A4B9;
+    font-size: 14px;
+    font-weight: 300;
+    font-family: 'CircularStd-Bold';
+}
+
+.table thead th {
+    border-bottom: none;
+}
+
+.table td, .table th {
+    border-top: none;
+    padding: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#thFirst {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding-left: 15px;
+}
+
+#thLast {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#tdFirst {
+    padding-left: 15px;
+}
+
+.btn {
+    border-radius: 20px;
+}
+
+.btn-danger {
+    background-color: #FF2222;
+    border-color: #FF2222;
+}
+
+#searchDiv {
+    margin-bottom: 2%;
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+    justify-content: flex-end;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0,0,0,.025)
+}
+
+.salvar {
+    font-family: 'CircularStd-Medium';
+    font-weight: 400;
+}

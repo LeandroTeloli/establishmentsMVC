@@ -1,0 +1,72 @@
+﻿@model IEnumerable<estabelecimentoMVC.Models.Estabelecimento>
+
+@{
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Fitcard - Estabelecimentos</title>
+    <link rel="stylesheet" href="~/css/EstabelecimentoStyle.css" />
+</head>
+<body>
+    <div class="container">
+        <div style="display: flex; flex-direction: row; justify-content: space-between">
+            <h2>Lista de Estabelecimentos</h2>
+
+            <div id="searchDiv">
+                <form style="width: 80%; display: flex; flex-direction: row;" asp-controller="estabelecimento" asp-action="EstabelecimentoSearch">
+                    <input style="border-radius:50px" class="form-control" type="text" placeholder="Buscar" aria-label="Buscar" name="text" />
+                    <button style="margin-left:2%;" type="submit" class="btn btn-secondary"><i style="color:white" class="fas fa-search"></i></button>
+                </form>
+                <a style="margin-left:2%;" type="button" class="btn btn-danger" asp-controller="estabelecimento" asp-action="EstabelecimentoAdd"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table" id="tableId">
+                <thead>
+                    <tr>
+                        <th id="thFirst" scope="col">Razão Social</th>
+                        <th scope="col">CNPJ</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Cidade - Estado</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Data de Cadastro</th>
+                        <th scope="col">Categoria</th>
+                        <th id="thLast" scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var estabelecimento in Model)
+                    {
+                    <tr>
+                        <td id="tdFirst">@estabelecimento.RazaoSocial</td>
+                        <td>@estabelecimento.Cnpj</td>
+                        <td>@estabelecimento.Email</td>
+                        <td>@estabelecimento.Cidade - @estabelecimento.Estado</td>
+                        @if (estabelecimento.Status == "Ativo") 
+                        { 
+                            <td><span class="badge badge-pill badge-danger">@estabelecimento.Status</span></td>
+                        } 
+                        else
+                        {
+                            <td><span class="badge badge-pill badge-secondary">@estabelecimento.Status</span></td>
+                        }
+                        <td>@estabelecimento.DataCadastro.ToString("dd/MM/yyyy")</td>
+                        <td>@estabelecimento?.Categoria?.Descricao</td>
+
+                        <td align="right"> 
+                            <a type="button" class="btn btn-sm btn-secondary" asp-route-id="@estabelecimento.IdEstabelecimento" asp-route-uf="@estabelecimento.Estado" asp-controller="estabelecimento" asp-action="EstabelecimentoEdit"><i class="fas fa-pen"></i></a>
+                            <a type="button" class="btn btn-sm btn-danger" asp-route-id="@estabelecimento.IdEstabelecimento" asp-controller="estabelecimento" asp-action="EstabelecimentoDelete" onclick="return confirm('Deseja excluir esse estabelecimento?')"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

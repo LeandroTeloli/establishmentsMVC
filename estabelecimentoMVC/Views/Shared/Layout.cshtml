@@ -1,0 +1,228 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html lang=”pt-br”>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/a4359165e8.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js" integrity="sha512-6Uv+497AWTmj/6V14BsQioPrm3kgwmK9HYIyWP+vClykX52b0zrDGP7lajZoIY1nNlX4oQuh7zsGjmF7D0VZYA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width" charset=”UTF-8” />
+</head>
+<body>
+    <header>
+        <nav>
+            <a class="inicio" asp-controller="home" asp-action="index">Início</a>
+            <a class="estabelecimentos" asp-controller="estabelecimento" asp-action="EstabelecimentoList">Estabelecimentos</a>
+            <a class="categorias" asp-controller="categoria" asp-action="CategoriaList">Categorias</a>
+        </nav>
+    </header>
+    @RenderBody()
+</body>
+</html>
+<script>
+
+    function loadMunicipios(option) {
+        var select = document.getElementById("municipios");
+        var length = select.options.length;
+        for (i = length - 1; i >= 0; i--) {
+                select.options[i] = null;
+        }
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("LoadMunicipios", "estabelecimento")',
+            dataType: 'json',
+            data: { uf: option },
+
+            success: function (municipios) {
+                if (option == "") {
+                    $("#municipios").append('<option value=""> Selecione o estado </option>');
+                }
+
+                $.each(municipios, function (key, municipio) {
+                    $("#municipios").append('<option value=' + municipio.text + '>' +
+                        municipio.text + '</option>');
+                });
+
+            },
+            error: function (ex) {
+                $("#alertDiv").show(200);
+                $("#alertDivP").text('Não foi possível listar os municípios' + ex);
+            }
+        });
+        return false;
+    }
+
+    $(document).ready(function () {
+        $("#cnpj").mask("00.000.000/0000-00")
+        $("#telefone").mask("(00) 0000-0000")
+        $("#agencia").mask("000-0")
+        $("#conta").mask("00.000-0");
+        $("#dataCadastro").mask("00/00/0000");
+
+        $("#formEstabelecimento").validate({
+            rules: {
+                email: {
+                    email: true,
+                },
+
+            }
+        })
+    })
+
+    if ($("#dataCadastro").val() == "") {
+        $("#dataCadastro").val(retornaDataAtual());
+    }
+
+    verificaCategoria();
+
+    $("#categoria").blur(function () {
+        if ($("#categoria").val() == "") {
+            $("#telefone").prop('required', false);
+        } else {
+            verificaCategoria();
+        }
+    });
+
+    $("#dataCadastro").blur(function () {
+        if (validaData($(this).val()) == false && $(this).val() != "") {
+            $("#alertDiv").show(200);
+            $("#alertDivP").text('A data inserida é inválida!');
+            $("#dataCadastro").val("");
+        } else {
+            $("#alertDiv").hide(100);
+        }
+    });
+
+    $("#cnpj").blur(function () {
+        if (validaCNPJ($(this).val()) == false && $(this).val() != "") {
+            $("#alertDiv").show(200);
+            $("#alertDivP").text('O CNPJ inserido é inválido!');
+
+            $("#cnpj").val("");
+        } else
+        {
+            $("#alertDiv").hide(100);
+        }
+    });
+
+    $('#formList').submit(function () {
+        verificaCategoria();
+    });
+
+    function hideAlert() {
+        $("#alertDiv").hide(100);
+    }
+
+    function verificaCategoria() {
+        if ($("#categoria option:selected").text().toUpperCase() == "SUPERMERCADO") {
+            $("#telefone").prop('required', true);
+        } else {
+            $("#telefone").prop('required', false);
+        }
+    };
+
+    function retornaDataAtual() {
+        var date = new Date();
+
+        var mes = date.getMonth() + 1;
+        var dia = date.getDate();
+
+        var dataAtual = (('' + dia).length < 2 ? '0' : '') + dia + '/' +
+
+            (('' + mes).length < 2 ? '0' : '') + mes + '/' +
+            date.getFullYear();
+
+        return dataAtual;
+    };
+
+
+    function validaData(data) {
+
+        if (data.length != 10)
+            return false;
+
+        var dia = data.substr(0, 2);
+        var barra1 = data.substr(2, 1);
+        var mes = data.substr(3, 2);
+        var barra2 = data.substr(5, 1);
+        var ano = data.substr(6, 4);
+
+        if (data.length != 10 || barra1 != "/" || barra2 != "/" || isNaN(dia) || isNaN(mes) || isNaN(ano) || dia > 31 || mes > 12)
+            return false;
+
+        if ((mes == 4 || mes == 6 || mes == 9 || mes == 11) && dia == 31)
+            return false;
+
+        if (mes == 2 && (dia > 29 || (dia == 29 && ano % 4 != 0)))
+            return false;
+
+        if (ano < 1900)
+            return false;
+
+        if (dia == 0 || mes == 0)
+            return false;
+
+        return true;
+    };
+
+    function validaCNPJ(cnpj) {
+
+        cnpj = cnpj.replace(/[^\d]+/g, '');
+
+        if (cnpj == '') return false;
+
+        if (cnpj.length != 14)
+            return false;
+
+        if (cnpj == "00000000000000" ||
+            cnpj == "11111111111111" ||
+            cnpj == "22222222222222" ||
+            cnpj == "33333333333333" ||
+            cnpj == "44444444444444" ||
+            cnpj == "55555555555555" ||
+            cnpj == "66666666666666" ||
+            cnpj == "77777777777777" ||
+            cnpj == "88888888888888" ||
+            cnpj == "99999999999999")
+            return false;
+
+        tamanho = cnpj.length - 2
+        numeros = cnpj.substring(0, tamanho);
+        digitos = cnpj.substring(tamanho);
+        soma = 0;
+        pos = tamanho - 7;
+        for (i = tamanho; i >= 1; i--) {
+            soma += numeros.charAt(tamanho - i) * pos--;
+            if (pos < 2)
+                pos = 9;
+        }
+        resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+        if (resultado != digitos.charAt(0))
+            return false;
+
+        tamanho = tamanho + 1;
+        numeros = cnpj.substring(0, tamanho);
+        soma = 0;
+        pos = tamanho - 7;
+        for (i = tamanho; i >= 1; i--) {
+            soma += numeros.charAt(tamanho - i) * pos--;
+            if (pos < 2)
+                pos = 9;
+        }
+        resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+        if (resultado != digitos.charAt(1))
+            return false;
+
+        return true;
+
+    };
+
+</script>

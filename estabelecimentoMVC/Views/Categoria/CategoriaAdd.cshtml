@@ -1,0 +1,37 @@
+﻿
+@model estabelecimentoMVC.Models.Categoria
+
+@{
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Fitcard - Cadastro de Categoria</title>
+
+    <link rel="stylesheet" href="~/css/CategoriaStyle.css" />
+</head>
+<body>
+    <div class="container" style="width: 70%;">
+        <h3>Adicionar Categoria</h3>
+
+        <form method="post" asp-controller="categoria" asp-action="CategoriaAdd" style="margin-top:5%;">
+            <div class="form-group" style="display: flex;  flex-direction: row; justify-content: space-between">
+                <div style="display: flex; width: 50%; flex-direction: column;">
+                    <label for="descricao">Categoria</label>
+                    <input type="text" class="form-control" id="descricao" asp-for="Descricao" placeholder="Digite a descrição" required>
+                </div>
+            </div>
+            <div style="display: flex;  flex-direction: row; justify-content: space-between; margin-top: 5%">
+                <div style="display: flex; width: 100%; flex-direction: row;">
+                    <input type="submit" class="btn btn-danger salvar" style="margin-right: 1%; color: white;" value="Salvar" />
+                    <a type="button" class="btn btn-secondary" asp-controller="categoria" asp-action="CategoriaList" value="Cancelar">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,125 @@
+﻿@font-face {
+    font-family: 'CircularStd-Black';
+    src: url('../fonts/CircularStd-Black.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'CircularStd-Medium';
+    src: url('../fonts/CircularStd-Medium.ttf') format('truetype');
+}
+
+*, ::after, ::before {
+    box-sizing: content-box;
+}
+
+body {
+    background-image: url('../images/HomeBackground.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.TextContainer {
+    margin-left: 7%;
+    margin-top: 3%;
+    width: 50%;
+}
+
+header {
+   display: flex;
+   justify-content: center;
+}
+
+nav {
+    width: 500px;
+    margin-bottom: 3%;
+    margin-top: 2%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    box-shadow: 0px 10px 15px -15px rgba(136,136,136,0.2);
+    background-color: white;
+    border-radius: 30px;
+}
+
+a {
+    color: #8B8B8B;
+    font-family: 'CircularStd-Medium';
+    font-size: 18px;
+    transition: all 0.3s;
+    padding: 3% 5%;
+}
+
+a:hover {
+    color: #282828;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.inicio {
+    margin-left: 50px;
+}
+
+.categorias {
+    margin-right: 50px;
+}
+
+h1 {
+    font-family: 'CircularStd-Black';
+    font-size: 50px;
+    color: #282828;
+}
+
+h3 {
+    font-family: 'CircularStd-Medium';
+    font-size: 25px;
+    color: #2C2C2C;
+    margin-top: 5%;
+}
+
+.button {
+    width: 160px;
+    height: 57px;
+    background-color: #FF2222;
+    color: white;
+    font-family: 'CircularStd-Medium';
+    font-size: 18px;
+    text-align: center;
+    line-height: 60px;
+    border-radius: 100px;
+    margin-top: 5%;
+    text-decoration: none;
+    padding: 0px;
+}
+
+.button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.3s;
+}
+
+.button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -15px;
+    transition: 0.3s;
+}
+
+.button:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.button:hover span {
+    padding-right: 15px;
+}
+
+.button:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
